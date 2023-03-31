@@ -21,20 +21,16 @@ public class LaunchPage{
         jp.setLayout(null);
 
 
-        JLabel label1 = new JLabel("Welcome, if you don't already have an account sign in first!");
-        label1.setBounds(215,105,395,30);
+        JLabel label1 = createLabel("Welcome, if you don't already have an account sign in first!", 215,105 , 395, 30);
         jp.add(label1);
 
-        JLabel userLabel = new JLabel("Email:");
-        userLabel.setBounds(295,175,85,30);
-        jp.add(userLabel);
+        JLabel mailLabel = createLabel("Email:", 295, 175, 85, 30);
+        jp.add(mailLabel);
 
-        JTextField userField = new JTextField();
-        userField.setBounds(345,175,85,30);
-        jp.add(userField);
+        JTextField mailField = createField(345, 175, 85, 30);
+        jp.add(mailField);
 
-        JLabel passwordLabel = new JLabel("Password:");
-        passwordLabel.setBounds(275,235,85,30);
+        JLabel passwordLabel = createLabel("Password:", 275, 235, 85, 30);
         jp.add(passwordLabel);
 
         JPasswordField passwordText = new JPasswordField();
@@ -54,9 +50,8 @@ public class LaunchPage{
         imagLabel.setBounds(0, 0, 800, 500);
         jp.add(imagLabel);
 
-        JLabel failedLogin = new JLabel("");
-        failedLogin.setBounds(215,465,380,20);
-        jp.add(failedLogin);
+        JLabel failedLogin = createLabel("", 215, 465, 380, 20);
+        jp.add(failedLogin); 
         
         //When user presses Sign In button
         signIn.addActionListener(new ActionListener() {
@@ -72,7 +67,7 @@ public class LaunchPage{
         logIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                String mail = userField.getText();
+                String mail = mailField.getText();
                 String password = passwordText.getText();
                 System.out.println(mail+" "+password);
                 if(mail.equals("Eray") && password.equals("1234")){
@@ -92,7 +87,17 @@ public class LaunchPage{
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //jf.setResizable(false);
         jf.setVisible(true);
+    }
+    
+    private JLabel createLabel(String text, int x, int y, int width, int height){
+        JLabel newLabel = new JLabel(text);
+        newLabel.setBounds(x,y,width,height);
+        return newLabel;
+    }
 
-
+    private JTextField createField(int x, int y, int width, int height){
+        JTextField newField = new JTextField();
+        newField.setBounds(x,y,width,height);
+        return newField;
     }
 }
