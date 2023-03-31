@@ -15,7 +15,7 @@ public class LaunchPage{
 
     public LaunchPage(){
 
-        jf.setSize(800,500);
+        jf.setSize(800,550);
         jf.setLocation(500,200);
         jf.add(jp);
         jp.setLayout(null);
@@ -53,6 +53,10 @@ public class LaunchPage{
         JLabel imagLabel = new JLabel("",image,JLabel.CENTER);
         imagLabel.setBounds(0, 0, 800, 500);
         jp.add(imagLabel);
+
+        JLabel failedLogin = new JLabel("");
+        failedLogin.setBounds(215,465,380,20);
+        jp.add(failedLogin);
         
         //When user presses Sign In button
         signIn.addActionListener(new ActionListener() {
@@ -76,10 +80,11 @@ public class LaunchPage{
                     AppPage appPage = new AppPage();
                 }
                 else{
-                    System.out.println("The password and email address you have entered doesnt match!");
+                    failedLogin.setText("The password and email address you have entered don't match!");
                 }
             }
         });
+        
 
         ImageIcon smallIcon = new ImageIcon("icon.jpg");
         jf.setIconImage(smallIcon.getImage());
