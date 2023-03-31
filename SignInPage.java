@@ -76,8 +76,14 @@ public class SignInPage {
         createAcc.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                jf.dispose();
-                LaunchPage launchP = new LaunchPage();
+                if(nameField.getText()!=null && userField.getText()!=null && birthField.getText()!=null && idField.getText()!=null && passwordText.getText()!=null && phoneField.getText()!=null){
+                    Customer newCust = new Customer(nameField.getText(), userField.getText() , passwordText.getText(), Integer.parseInt(idField.getText()) , Integer.parseInt(birthField.getText()) , Integer.parseInt(phoneField.getText()));
+                    jf.dispose();
+                    LaunchPage launchP = new LaunchPage();
+                }
+                else{
+                    System.out.println("Error");
+                }
             }
             
         });
