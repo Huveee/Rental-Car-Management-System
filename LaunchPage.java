@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LaunchPage{
+public class LaunchPage /*implements PageInterface*/{
     private JPanel jp = new JPanel();
     private JFrame jf = new JFrame("Rent-A-Car");
 
@@ -27,24 +27,22 @@ public class LaunchPage{
         JLabel mailLabel = createLabel("Email:", 295, 175, 85, 30);
         jp.add(mailLabel);
 
-        JTextField mailField = createField(345, 175, 85, 30);
+        JTextField mailField = createField(345, 175, 125, 30);
         jp.add(mailField);
 
         JLabel passwordLabel = createLabel("Password:", 275, 235, 85, 30);
         jp.add(passwordLabel);
 
         JPasswordField passwordText = new JPasswordField();
-        passwordText.setBounds(345,235,85,30);
+        passwordText.setBounds(345,235,125,30);
         jp.add(passwordText);
 
-        JButton signIn = new JButton("Sign In");
-        signIn.setBounds(325, 425, 120, 30);
+        JButton signIn = createButton("Sign In", 325, 425, 120, 30);
         jp.add(signIn);
 
-        JButton logIn = new JButton("Log In");
-        logIn.setBounds(325, 385, 120, 30);
+        JButton logIn = createButton("Log In", 325, 385, 120, 30);
         jp.add(logIn);
- 
+
         ImageIcon image = new ImageIcon("carkeys.jpg");
         JLabel imagLabel = new JLabel("",image,JLabel.CENTER);
         imagLabel.setBounds(0, 0, 800, 500);
@@ -57,7 +55,7 @@ public class LaunchPage{
         signIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                System.out.print(userField.getText());
+                System.out.print(mailField.getText());
                 jf.dispose();
                 SignInPage signInPage = new SignInPage();
             }
@@ -74,6 +72,11 @@ public class LaunchPage{
                     jf.dispose();
                     AppPage appPage = new AppPage();
                 }
+                else if(mail.equals("admin@rentacar.com")&& password.equals("12345")){
+                    jf.dispose();
+                    AdminPage adminPage = new AdminPage();
+                }
+
                 else{
                     failedLogin.setText("The password and email address you have entered don't match!");
                 }
@@ -99,5 +102,11 @@ public class LaunchPage{
         JTextField newField = new JTextField();
         newField.setBounds(x,y,width,height);
         return newField;
+    }
+
+    private JButton createButton(String text, int x,int y,int width, int height){
+        JButton newButton = new JButton(text);
+        newButton.setBounds(x, y, width, height);
+        return newButton;
     }
 }

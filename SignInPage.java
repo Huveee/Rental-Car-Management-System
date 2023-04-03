@@ -53,13 +53,13 @@ public class SignInPage {
         birthField.setBounds(345,205,105,25);
         jp.add(birthField);
 
-        JLabel userLabel = new JLabel("Email:");
-        userLabel.setBounds(295,235,85,25);
-        jp.add(userLabel);
+        JLabel mailLabel = new JLabel("Email:");
+        mailLabel.setBounds(295,235,85,25);
+        jp.add(mailLabel);
 
-        JTextField userField = new JTextField();
-        userField.setBounds(345,235,105,25);
-        jp.add(userField);
+        JTextField mailField = new JTextField();
+        mailField.setBounds(345,235,105,25);
+        jp.add(mailField);
 
         JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setBounds(275,265,85,25);
@@ -76,8 +76,8 @@ public class SignInPage {
         createAcc.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                if(nameField.getText()!=null && userField.getText()!=null && birthField.getText()!=null && idField.getText()!=null && passwordText.getText()!=null && phoneField.getText()!=null){
-                    Customer newCust = new Customer(nameField.getText(), userField.getText() , passwordText.getText(), Integer.parseInt(idField.getText()) , Integer.parseInt(birthField.getText()) , Integer.parseInt(phoneField.getText()));
+                if(nameField.getText()!=null && mailField.getText()!=null && birthField.getText()!=null && idField.getText()!=null && passwordText.getText()!=null && phoneField.getText()!=null){
+                    Customer newCust = new Customer(nameField.getText(), mailField.getText() , passwordText.getText(), Integer.parseInt(idField.getText()) , Integer.parseInt(birthField.getText()) , Integer.parseInt(phoneField.getText()));
                     jf.dispose();
                     LaunchPage launchP = new LaunchPage();
                 }
