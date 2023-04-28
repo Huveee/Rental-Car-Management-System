@@ -5,6 +5,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -78,6 +79,7 @@ public class SignInPage {
             public void actionPerformed(ActionEvent e){
                 if(nameField.getText()!=null && mailField.getText()!=null && birthField.getText()!=null && idField.getText()!=null && passwordText.getText()!=null && phoneField.getText()!=null){
                     Customer newCust = new Customer(nameField.getText(), mailField.getText() , passwordText.getText(), Integer.parseInt(idField.getText()) , Integer.parseInt(birthField.getText()) , Integer.parseInt(phoneField.getText()));
+                    JOptionPane.showMessageDialog(null, "You have successfully created an account!");
                     jf.dispose();
                     LaunchPage launchP = new LaunchPage();
                 }

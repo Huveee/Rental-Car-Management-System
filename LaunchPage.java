@@ -1,3 +1,4 @@
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -55,7 +56,6 @@ public class LaunchPage /*implements PageInterface*/{
         signIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                System.out.print(mailField.getText());
                 jf.dispose();
                 SignInPage signInPage = new SignInPage();
             }
@@ -76,7 +76,6 @@ public class LaunchPage /*implements PageInterface*/{
                     jf.dispose();
                     AdminPage adminPage = new AdminPage();
                 }
-
                 else{
                     failedLogin.setText("The password and email address you have entered don't match!");
                 }
@@ -104,7 +103,7 @@ public class LaunchPage /*implements PageInterface*/{
         return newField;
     }
 
-    private JButton createButton(String text, int x,int y,int width, int height){
+    protected JButton createButton(String text, int x,int y,int width, int height){
         JButton newButton = new JButton(text);
         newButton.setBounds(x, y, width, height);
         return newButton;

@@ -10,8 +10,15 @@ public class Car {
 
     
     //Constructer
-    public Car(){
-        
+    public Car(String brandName,String modelName,int year,String color,double fuelConsumption, double dailyRentalRate,String licensePlate,boolean isReserved){
+        this.brandName = brandName;
+        this.modelName = modelName;
+        this.year = year;
+        this.color = color;
+        this.fuelConsumption = fuelConsumption;
+        this.dailyRentalRate = dailyRentalRate;
+        this.licensePlate = licensePlate;
+        this.isReserved = isReserved;
     }
     
     //Methods
@@ -19,59 +26,32 @@ public class Car {
         return this.brandName;
     }
     
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
-    }
-    
     public String getModelName() {
         return this.modelName;
-    }
-    
-    public void setModelName(String modelName) {
-        this.modelName = modelName;
-    }
+    }  
     
     public int getYear() {
         return this.year;
     }
     
-    public void setYear(int year) {
-        this.year = year;
-    }
     
     public String getColor() {
         return this.color;
-    }
-    
-    public void setColor(String color) {
-        this.color = color;
     }
     
     public double getFuelConsumption() {
         return this.fuelConsumption;
     }
     
-    public void setFuelConsumption(double fuelConsumption) {
-        this.fuelConsumption = fuelConsumption;
-    }
-    
     public double getDailyRentalRate() {
         return this.dailyRentalRate;
-    }
-    
-    public void setDailyRentalRate(double dailyRentalRate) {
-        this.dailyRentalRate = dailyRentalRate;
     }
     
     public String getLicensePlate() {
         return this.licensePlate;
     }
     
-    public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate;
-    }
-    
-    public boolean isIsReserved() {
+    public boolean getIsReserved() {
         return this.isReserved;
     }
     
