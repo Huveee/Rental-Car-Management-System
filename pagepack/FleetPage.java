@@ -1,3 +1,4 @@
+package pagepack;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,7 +20,7 @@ public class FleetPage {
 
 
 
-        ImageIcon smallIcon = new ImageIcon("icon.jpg");
+        ImageIcon smallIcon = new ImageIcon("imgpack\\icon.jpg");
         jf.setIconImage(smallIcon.getImage());
 
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

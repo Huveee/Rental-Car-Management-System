@@ -1,3 +1,5 @@
+package objectpack;
+
 public class Car {
     private String brandName;
     private String modelName;
@@ -7,10 +9,11 @@ public class Car {
     private double dailyRentalRate;
     private String licensePlate;
     private boolean isReserved;
+    private String currentLocation;
 
     
     //Constructer
-    public Car(String brandName,String modelName,int year,String color,double fuelConsumption, double dailyRentalRate,String licensePlate,boolean isReserved){
+    public Car(String brandName,String modelName,int year,String color,double fuelConsumption, double dailyRentalRate,String licensePlate,boolean isReserved, String currentLocation){
         this.brandName = brandName;
         this.modelName = modelName;
         this.year = year;
@@ -19,6 +22,7 @@ public class Car {
         this.dailyRentalRate = dailyRentalRate;
         this.licensePlate = licensePlate;
         this.isReserved = isReserved;
+        this.currentLocation = currentLocation;
     }
     
     //Methods
@@ -33,7 +37,6 @@ public class Car {
     public int getYear() {
         return this.year;
     }
-    
     
     public String getColor() {
         return this.color;

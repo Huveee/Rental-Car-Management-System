@@ -1,3 +1,4 @@
+package objectpack;
 public class Payment {
     private double paymentAmount;
     private String paymentDate;

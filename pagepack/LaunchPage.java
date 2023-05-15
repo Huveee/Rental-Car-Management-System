@@ -1,3 +1,4 @@
+package pagepack;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,7 +45,7 @@ public class LaunchPage /*implements PageInterface*/{
         JButton logIn = createButton("Log In", 325, 385, 120, 30);
         jp.add(logIn);
 
-        ImageIcon image = new ImageIcon("carkeys.jpg");
+        ImageIcon image = new ImageIcon("imgpack\\carkeys.jpg");
         JLabel imagLabel = new JLabel("",image,JLabel.CENTER);
         imagLabel.setBounds(0, 0, 800, 500);
         jp.add(imagLabel);
@@ -83,7 +84,7 @@ public class LaunchPage /*implements PageInterface*/{
         });
         
 
-        ImageIcon smallIcon = new ImageIcon("icon.jpg");
+        ImageIcon smallIcon = new ImageIcon("imgpack\\icon.jpg");
         jf.setIconImage(smallIcon.getImage());
 
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

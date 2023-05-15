@@ -1,3 +1,4 @@
+package objectpack;
 public class Customer {
     private String userName;
     private String eMail;

@@ -1,3 +1,4 @@
+package pagepack;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,7 +25,7 @@ public class AdminPage {
 
 
 
-        ImageIcon smallIcon = new ImageIcon("icon.jpg");
+        ImageIcon smallIcon = new ImageIcon("imgpack\\icon.jpg");
         jf.setIconImage(smallIcon.getImage());
 
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

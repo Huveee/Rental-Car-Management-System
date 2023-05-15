@@ -1,3 +1,4 @@
+package pagepack;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -26,7 +27,18 @@ public class AppPage implements PageInterface{
             @Override
             public void actionPerformed(ActionEvent e){
                 jf.dispose();
-                CarSelPayPage rentPage = new CarSelPayPage();
+                CarSelPage rentPage = new CarSelPage(0);
+            }
+        });
+
+        JButton selLoc = createButton("Select Location", 325, 175, 120, 30);
+        jp.add(selLoc);
+
+        selLoc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                jf.dispose();
+                LocSelPage locPage = new LocSelPage(0);
             }
         });
 
@@ -44,7 +56,7 @@ public class AppPage implements PageInterface{
         });
 
 
-        ImageIcon smallIcon = new ImageIcon("icon.jpg");
+        ImageIcon smallIcon = new ImageIcon("imgpack\\icon.jpg");
         jf.setIconImage(smallIcon.getImage());
 
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
