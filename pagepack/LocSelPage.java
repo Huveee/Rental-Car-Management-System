@@ -2,6 +2,9 @@ package pagepack;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -17,6 +20,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
 import objectpack.Location;
+import objectpack.Car;
 
 public class LocSelPage {
     private int i;
@@ -39,8 +43,22 @@ public class LocSelPage {
         sp.setLeftComponent(new JScrollPane(list));
         sp.setRightComponent(jp);
         jp.add(location);
-        //TODO:a loop to read the file and add available locations to list
-        model.addElement(new Location("Buca","Kzk Mh. 37/12.Sk",05324777003,true, null));
+        try {
+            File locFile = new File("locations.txt");
+            Scanner locScanner = new Scanner(locFile);
+            locScanner.nextLine();
+            while(locScanner.hasNext()) {
+                String locLine = locScanner.nextLine();
+                String[] locAttr = locLine.split(", ");
+                Location l = new Location(locAttr[0], locAttr[1], locAttr[2], Boolean.parseBoolean(locAttr[3]), null);
+                model.addElement(l);
+            }
+            locScanner.close();
+        } 
+        catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
         list.getSelectionModel().addListSelectionListener(e ->{
             Location l = list.getSelectedValue();
             location.setText(l.getLocationName()+" "+l.getAddress()+" "+l.getIsLocationAvailable()+" "+l.getCar()+" "+l.getContactInformation());

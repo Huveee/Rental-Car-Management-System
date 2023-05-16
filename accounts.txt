@@ -1,0 +1,2 @@
+UserName|Email|Password|IdNo|Age|Phone
+Leo, Eray, 1234, -, -, -

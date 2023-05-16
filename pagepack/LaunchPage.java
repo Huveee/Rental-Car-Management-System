@@ -2,6 +2,9 @@ package pagepack;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -68,17 +71,28 @@ public class LaunchPage /*implements PageInterface*/{
             public void actionPerformed(ActionEvent e){
                 String mail = mailField.getText();
                 String password = passwordText.getText();
-                System.out.println(mail+" "+password);
-                if(mail.equals("Eray") && password.equals("1234")){
-                    jf.dispose();
-                    AppPage appPage = new AppPage();
-                }
-                else if(mail.equals("admin@rentacar.com")&& password.equals("12345")){
+                if(mail.equals("admin@rentacar.com")&& password.equals("12345")){
                     jf.dispose();
                     AdminPage adminPage = new AdminPage();
                 }
-                else{
+                try {
+                    File accFile = new File("accounts.txt");
+                    Scanner accScanner = new Scanner(accFile);
+                    accScanner.nextLine();
+                    while(accScanner.hasNext()) {
+                        String accLine = accScanner.nextLine();
+                        String[] accAttr = accLine.split(", ");
+                        if(mail.equals(accAttr[1]) && password.equals(accAttr[2])){
+                            jf.dispose();
+                            AppPage appPage = new AppPage();
+                        }
+                    }
+                    accScanner.close();
                     failedLogin.setText("The password and email address you have entered don't match!");
+                } 
+                catch (FileNotFoundException t) {
+                    System.out.println("An error occurred.");
+                    t.printStackTrace();
                 }
             }
         });

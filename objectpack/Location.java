@@ -2,12 +2,12 @@ package objectpack;
 public class Location {
     private String locationName;
     private String address;
-    private int contactInformation;
+    private String contactInformation;
     private boolean isLocationAvailable;
     private Car car;
 
     
-    public Location(String locationName,String address,int contactInformation,boolean isLocationAvailable,Car car){
+    public Location(String locationName,String address,String contactInformation,boolean isLocationAvailable,Car car){
         this.locationName = locationName;
         this.address = address;
         this.contactInformation = contactInformation;
@@ -23,11 +23,11 @@ public class Location {
         return this.address;
     }
     
-    public int getContactInformation() {
+    public String getContactInformation() {
         return this.contactInformation;
     }
     
-    public void setContactInformation(int contactInformation) {
+    public void setContactInformation(String contactInformation) {
         this.contactInformation = contactInformation;
     }
     
