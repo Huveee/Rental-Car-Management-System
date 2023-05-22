@@ -14,47 +14,28 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LaunchPage /*implements PageInterface*/{
-    private JPanel jp = new JPanel();
-    private JFrame jf = new JFrame("Rent-A-Car");
 
+public class LaunchPage extends Page{
+    static JPanel jp = new JPanel();
+    static JFrame jf = new JFrame("Rent-A-Car");
     public LaunchPage(){
+        super(jf,jp);
 
-        jf.setSize(800,550);
-        jf.setLocation(500,200);
-        jf.add(jp);
-        jp.setLayout(null);
+        createLabel("Welcome, if you don't already have an account sign in first!", 215,105 , 395, 30,jp);
 
+        createLabel("Email:", 295, 175, 85, 30,jp);
 
-        JLabel label1 = createLabel("Welcome, if you don't already have an account sign in first!", 215,105 , 395, 30);
-        jp.add(label1);
+        JTextField mailField = createField(345, 175, 125, 30,jp);
 
-        JLabel mailLabel = createLabel("Email:", 295, 175, 85, 30);
-        jp.add(mailLabel);
+        createLabel("Password:", 275, 235, 85, 30, jp);
 
-        JTextField mailField = createField(345, 175, 125, 30);
-        jp.add(mailField);
+        JPasswordField passwordText = createPasswordField(345,235,125,30, jp);
 
-        JLabel passwordLabel = createLabel("Password:", 275, 235, 85, 30);
-        jp.add(passwordLabel);
+        JButton signIn = createButton("Sign In", 325, 425, 120, 30, jp);
 
-        JPasswordField passwordText = new JPasswordField();
-        passwordText.setBounds(345,235,125,30);
-        jp.add(passwordText);
+        JButton logIn = createButton("Log In", 325, 385, 120, 30, jp);
 
-        JButton signIn = createButton("Sign In", 325, 425, 120, 30);
-        jp.add(signIn);
-
-        JButton logIn = createButton("Log In", 325, 385, 120, 30);
-        jp.add(logIn);
-
-        ImageIcon image = new ImageIcon("imgpack\\carkeys.jpg");
-        JLabel imagLabel = new JLabel("",image,JLabel.CENTER);
-        imagLabel.setBounds(0, 0, 800, 500);
-        jp.add(imagLabel);
-
-        JLabel failedLogin = createLabel("", 215, 465, 380, 20);
-        jp.add(failedLogin); 
+        JLabel failedLogin = createLabel("", 215, 465, 380, 20, jp);
         
         //When user presses Sign In button
         signIn.addActionListener(new ActionListener() {
@@ -76,12 +57,12 @@ public class LaunchPage /*implements PageInterface*/{
                     AdminPage adminPage = new AdminPage();
                 }
                 try {
-                    File accFile = new File("accounts.txt");
+                    File accFile = new File("accounts.csv");
                     Scanner accScanner = new Scanner(accFile);
                     accScanner.nextLine();
                     while(accScanner.hasNext()) {
                         String accLine = accScanner.nextLine();
-                        String[] accAttr = accLine.split(", ");
+                        String[] accAttr = accLine.split(",");
                         if(mail.equals(accAttr[1]) && password.equals(accAttr[2])){
                             jf.dispose();
                             AppPage appPage = new AppPage();
@@ -96,31 +77,14 @@ public class LaunchPage /*implements PageInterface*/{
                 }
             }
         });
-        
 
-        ImageIcon smallIcon = new ImageIcon("imgpack\\icon.jpg");
-        jf.setIconImage(smallIcon.getImage());
+        ImageIcon image = new ImageIcon("imgpack\\carkeys.jpg");
+        JLabel imagLabel = new JLabel("",image,JLabel.CENTER);
+        imagLabel.setBounds(0, 0, 800, 500);
+        jp.add(imagLabel);
 
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //jf.setResizable(false);
+        jf.setResizable(false);
         jf.setVisible(true);
-    }
-    
-    private JLabel createLabel(String text, int x, int y, int width, int height){
-        JLabel newLabel = new JLabel(text);
-        newLabel.setBounds(x,y,width,height);
-        return newLabel;
-    }
-
-    private JTextField createField(int x, int y, int width, int height){
-        JTextField newField = new JTextField();
-        newField.setBounds(x,y,width,height);
-        return newField;
-    }
-
-    protected JButton createButton(String text, int x,int y,int width, int height){
-        JButton newButton = new JButton(text);
-        newButton.setBounds(x, y, width, height);
-        return newButton;
     }
 }

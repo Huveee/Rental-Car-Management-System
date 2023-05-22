@@ -1,0 +1,5 @@
+Brand,Model,Year,Color,FuelConsumption,DailyRate,LicensePlate,IsReserved,CurrentLocation
+Fiat,Egea,2019,Blue,5.4,150,35BCA575,false,Buca
+Ford,Focus,2020,White,6.3,165,34SK453,false,Bornova
+Skoda,Scala,2022,Blue,4.7,190,34TM571,false,Konak
+Fiat,500,2019,Pink,4.9,195,34MT975,false,Menemen

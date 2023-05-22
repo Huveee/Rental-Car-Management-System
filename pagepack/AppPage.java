@@ -10,19 +10,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class AppPage implements PageInterface{
-    private JPanel jp = new JPanel();
-    private JFrame jf = new JFrame("Rent-A-Car");
-    public AppPage(){
-        
-        jf.setSize(800,500);
-        jf.setLocation(500,200);
-        jf.add(jp);
-        jp.setLayout(null);
-
-        JButton rentCar = createButton("Rent A Car", 325, 125, 120, 30);
-        jp.add(rentCar);
-
+class AppPage extends Page{
+    static JPanel jp = new JPanel();
+    static JFrame jf = new JFrame("Rent-A-Car");
+    AppPage(){
+        super(jf,jp);
+        JButton rentCar = createButton("Rent A Car", 325, 125, 120, 30, jp);
         rentCar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
@@ -31,9 +24,7 @@ public class AppPage implements PageInterface{
             }
         });
 
-        JButton selLoc = createButton("Select Location", 325, 175, 120, 30);
-        jp.add(selLoc);
-
+        JButton selLoc = createButton("Select Location", 325, 175, 120, 30, jp);
         selLoc.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
@@ -42,9 +33,7 @@ public class AppPage implements PageInterface{
             }
         });
 
-        JButton delAcc = createButton("Delete Account", 325, 425, 120, 30);
-        jp.add(delAcc);
-
+        JButton delAcc = createButton("Delete Account", 325, 425, 120, 30, jp);
         delAcc.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
@@ -55,30 +44,8 @@ public class AppPage implements PageInterface{
             }
         });
 
-
-        ImageIcon smallIcon = new ImageIcon("imgpack\\icon.jpg");
-        jf.setIconImage(smallIcon.getImage());
-
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //jf.setResizable(false);
+        jf.setResizable(false);
         jf.setVisible(true);
-    }
-
-    public JLabel createLabel(String text, int x, int y, int width, int height){
-        JLabel newLabel = new JLabel(text);
-        newLabel.setBounds(x,y,width,height);
-        return newLabel;
-    }
-
-    public JTextField createField(int x, int y, int width, int height){
-        JTextField newField = new JTextField();
-        newField.setBounds(x,y,width,height);
-        return newField;
-    }
-
-    public JButton createButton(String text, int x,int y,int width, int height){
-        JButton newButton = new JButton(text);
-        newButton.setBounds(x, y, width, height);
-        return newButton;
     }
 }

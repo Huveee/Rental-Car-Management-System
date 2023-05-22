@@ -22,21 +22,17 @@ import javax.swing.JTextField;
 import objectpack.Location;
 import objectpack.Car;
 
-public class LocSelPage {
+class LocSelPage extends Page{
     private int i;
-    private JPanel jp = new JPanel();
-    private JFrame jf = new JFrame("Rent-A-Car");
+    static JPanel jp = new JPanel();
+    static JFrame jf = new JFrame("Rent-A-Car");
     JList<Location> list = new JList<>();
     DefaultListModel<Location> model = new DefaultListModel<>();
     JSplitPane sp =  new JSplitPane();
-    JLabel location = createLabel("", 215, 65, 380, 30);
-    public LocSelPage(int i){
+    JLabel location = createLabel("", 215, 65, 380, 30, jp);
+    LocSelPage(int i){
+        super(jf,jp);
         this.i =i;
-        
-        jf.setSize(800,500);
-        jf.setLocation(500,200);
-        jf.add(jp);
-        jp.setLayout(null);
         jf.add(sp);
 
         list.setModel(model);
@@ -44,12 +40,12 @@ public class LocSelPage {
         sp.setRightComponent(jp);
         jp.add(location);
         try {
-            File locFile = new File("locations.txt");
+            File locFile = new File("locations.csv");
             Scanner locScanner = new Scanner(locFile);
             locScanner.nextLine();
             while(locScanner.hasNext()) {
                 String locLine = locScanner.nextLine();
-                String[] locAttr = locLine.split(", ");
+                String[] locAttr = locLine.split(",");
                 Location l = new Location(locAttr[0], locAttr[1], locAttr[2], Boolean.parseBoolean(locAttr[3]), null);
                 model.addElement(l);
             }
@@ -63,10 +59,8 @@ public class LocSelPage {
             Location l = list.getSelectedValue();
             location.setText(l.getLocationName()+" "+l.getAddress()+" "+l.getIsLocationAvailable()+" "+l.getCar()+" "+l.getContactInformation());
         });
-
         if(this.i==0){//indicates that we got to choose the location first
-            JButton selCar = createButton("Selet Car", 325, 265, 120, 30);
-            jp.add(selCar);
+            JButton selCar = createButton("Selet Car", 325, 265, 120, 30,jp);
             selCar.addActionListener((ActionListener) new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e){
@@ -76,28 +70,19 @@ public class LocSelPage {
             });
         }
         else{
-            JLabel cardNo = createLabel("Card No:", 295, 135, 85, 30);
-            jp.add(cardNo);
+            createLabel("Card No:", 295, 135, 85, 30, jp);
 
-            JTextField cardField = createField(345, 135, 225, 30);
-            jp.add(cardField);
+            JTextField cardField = createField(345, 135, 225, 30, jp);
 
-            JLabel exDate = createLabel("Expiration Date:", 255, 175, 125, 30);
-            jp.add(exDate);
+            createLabel("Expiration Date:", 255, 175, 125, 30, jp);
 
-            JTextField dateField = createField(345, 175, 75, 30);
-            jp.add(dateField);
+            JTextField dateField = createField(345, 175, 75, 30,jp);
 
-            JLabel cvvLabel = createLabel("CVV:", 305, 215, 35, 30);
-            jp.add(cvvLabel);
+            createLabel("CVV:", 305, 215, 35, 30,jp);
 
-            JPasswordField cvvText = new JPasswordField();
-            cvvText.setBounds(345,215,65,30);
-            jp.add(cvvText);
+            JPasswordField cvvText = createPasswordField(345,215,65,30,jp);
             
-            JButton rentCar = createButton("Rent Car", 325, 265, 120, 30);
-            jp.add(rentCar);
-
+            JButton rentCar = createButton("Rent Car", 325, 265, 120, 30,jp);
             rentCar.addActionListener((ActionListener) new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e){
@@ -109,29 +94,8 @@ public class LocSelPage {
             });
         }
 
-        ImageIcon smallIcon = new ImageIcon("imgpack\\icon.jpg");
-        jf.setIconImage(smallIcon.getImage());
-
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //jf.setResizable(false);
+        jf.setResizable(false);
         jf.setVisible(true);
-    }
-
-    private JLabel createLabel(String text, int x, int y, int width, int height){
-        JLabel newLabel = new JLabel(text);
-        newLabel.setBounds(x,y,width,height);
-        return newLabel;
-    }
-
-    private JTextField createField(int x, int y, int width, int height){
-        JTextField newField = new JTextField();
-        newField.setBounds(x,y,width,height);
-        return newField;
-    }
-
-    protected JButton createButton(String text, int x,int y,int width, int height){
-        JButton newButton = new JButton(text);
-        newButton.setBounds(x, y, width, height);
-        return newButton;
     }
 }

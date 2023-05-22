@@ -1,4 +1,12 @@
 package objectpack;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+
 public class Reservation {
     private String pickupDate;
     private String dropOffDate;
@@ -13,6 +21,23 @@ public class Reservation {
         
     }
     
+    public static void getReservationsHistory(DefaultListModel<String> model){
+        try {
+            File resFile = new File("resarvations.csv");
+            Scanner resScanner = new Scanner(resFile);
+            resScanner.nextLine();
+            while(resScanner.hasNext()) {
+                String resLine = resScanner.nextLine();
+                model.addElement(resLine);
+            }
+            resScanner.close();
+        } 
+        catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
     public String getPickupDate() {
         return this.pickupDate;
     }

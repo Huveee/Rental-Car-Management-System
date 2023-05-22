@@ -1,41 +1,40 @@
 package pagepack;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class AdminPage {
-    private JPanel jp = new JPanel();
-    private JFrame jf = new JFrame("Rent-A-Car");
+class AdminPage extends Page{
+    static JPanel jp = new JPanel();
+    static JFrame jf = new JFrame("Rent-A-Car");
 
-    public AdminPage(){
-        jf.setSize(800,500);
-        jf.setLocation(500,200);
-        jf.add(jp);
-        jp.setLayout(null);
+    AdminPage(){
+        super(jf, jp);
 
 
+        JButton carFleet = createButton("Manage Car Fleet", 150, 150, 130, 90, jp);
+        carFleet.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                jf.dispose();
+                FleetPage fleetPage = new FleetPage();
+            }
+        });
 
-
-        JButton carFleet = createButton("Manage Car Fleet", 150, 150, 130, 90);
-        jp.add(carFleet);
-
-        JButton reservationPanel = createButton("See reservations",300 , 150, 130, 90);
-        jp.add(reservationPanel);
-
-
-
-        ImageIcon smallIcon = new ImageIcon("imgpack\\icon.jpg");
-        jf.setIconImage(smallIcon.getImage());
+        JButton reservationPanel = createButton("See Reservations",300 , 150, 130, 90, jp);
+        reservationPanel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                jf.dispose();
+                ResPage resPage = new ResPage();
+            }
+        });
 
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //jf.setResizable(false);
+        jf.setResizable(false);
         jf.setVisible(true);
-    }
-
-    private JButton createButton(String text, int x,int y,int width, int height){
-        JButton newButton = new JButton(text);
-        newButton.setBounds(x, y, width, height);
-        return newButton;
     }
 }
