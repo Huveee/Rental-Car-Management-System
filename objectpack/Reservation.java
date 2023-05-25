@@ -23,7 +23,7 @@ public class Reservation {
     
     public static void getReservationsHistory(DefaultListModel<String> model){
         try {
-            File resFile = new File("resarvations.csv");
+            File resFile = new File("reservations.csv");
             Scanner resScanner = new Scanner(resFile);
             resScanner.nextLine();
             while(resScanner.hasNext()) {

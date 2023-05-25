@@ -27,7 +27,7 @@ class FleetPage extends Page{
         list.setModel(model);
         sp.setLeftComponent(new JScrollPane(list));
         sp.setRightComponent(jp);
-        Car.getCarList(model);
+        Car.getCarList(model,null);
 
         JTextField addField = createField(170, 170, 380, 30, jp);
         JButton addCar = createButton("Add Car", 250, 200, 140, 30, jp);

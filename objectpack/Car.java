@@ -18,8 +18,6 @@ public class Car {
     private String licensePlate;
     private boolean isReserved;
     private String currentLocation;
-
-    
     
     //Constructer
     public Car(String brandName,String modelName,String year,String color,String fuelConsumption, String dailyRentalRate,String licensePlate,boolean isReserved, String currentLocation){
@@ -35,7 +33,6 @@ public class Car {
     }
     
     //Methods
-
     public void addToCSV(){
         try {
             File carFile = new File("cars.csv");
@@ -57,7 +54,6 @@ public class Car {
             e.printStackTrace();
         }
     }
-
     //Not done
     public void updateCar(Car c){
         try {
@@ -83,7 +79,7 @@ public class Car {
             e.printStackTrace();
         }
     }
-
+    
     public void removeCar(){
         try {
             File carFile = new File("cars.csv");
@@ -107,8 +103,8 @@ public class Car {
             e.printStackTrace();
         }
     }
-
-    public static void getCarList(DefaultListModel<Car> model){
+    
+    public static void getCarList(DefaultListModel<Car> model, Location l){
         try {
             File carFile = new File("cars.csv");
             Scanner carScanner = new Scanner(carFile);
@@ -117,7 +113,14 @@ public class Car {
                 String carLine = carScanner.nextLine();
                 String[] carAttr = carLine.split(",");
                 Car c = new Car(carAttr[0], carAttr[1], carAttr[2], carAttr[3], carAttr[4], carAttr[5], carAttr[6], Boolean.parseBoolean(carAttr[7]), carAttr[8]);
-                model.addElement(c);
+                if(l.getLocationName()!=null){
+                    if(l.getLocationName().equalsIgnoreCase(c.getCurrentLocation())){
+                        model.addElement(c);
+                    }
+                }
+                else{
+                    model.addElement(c);
+                }
             }
             carScanner.close();
         } 
@@ -126,7 +129,70 @@ public class Car {
             e.printStackTrace();
         }
     }
-    
+    public String getBrandName() {
+        return this.brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
+
+    public String getModelName() {
+        return this.modelName;
+    }
+
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
+    }
+
+    public String getYear() {
+        return this.year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getColor() {
+        return this.color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getFuelConsumption() {
+        return this.fuelConsumption;
+    }
+
+    public void setFuelConsumption(String fuelConsumption) {
+        this.fuelConsumption = fuelConsumption;
+    }
+
+    public String getDailyRentalRate() {
+        return this.dailyRentalRate;
+    }
+
+    public void setDailyRentalRate(String dailyRentalRate) {
+        this.dailyRentalRate = dailyRentalRate;
+    }
+
+    public String getLicensePlate() {
+        return this.licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
+
+    public boolean getIsReserved() {
+        return this.isReserved;
+    }
+
+    public void setIsReserved(boolean isReserved) {
+        this.isReserved = isReserved;
+    }
+
     public String getCurrentLocation() {
         return this.currentLocation;
     }
@@ -134,40 +200,7 @@ public class Car {
     public void setCurrentLocation(String currentLocation) {
         this.currentLocation = currentLocation;
     }
+    
+    
 
-    public String getBrandName() {
-        return this.brandName;
-    }
-    
-    public String getModelName() {
-        return this.modelName;
-    }  
-    
-    public String getYear() {
-        return this.year;
-    }
-    
-    public String getColor() {
-        return this.color;
-    }
-    
-    public String getFuelConsumption() {
-        return this.fuelConsumption;
-    }
-    
-    public String getDailyRentalRate() {
-        return this.dailyRentalRate;
-    }
-    
-    public String getLicensePlate() {
-        return this.licensePlate;
-    }
-    
-    public boolean getIsReserved() {
-        return this.isReserved;
-    }
-    
-    public void setIsReserved(boolean isReserved) {
-        this.isReserved = isReserved;
-    }
 }

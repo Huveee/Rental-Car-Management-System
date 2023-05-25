@@ -24,48 +24,41 @@ import objectpack.Car;
 
 class LocSelPage extends Page{
     private int i;
+    private Car c;
     static JPanel jp = new JPanel();
     static JFrame jf = new JFrame("Rent-A-Car");
     JList<Location> list = new JList<>();
     DefaultListModel<Location> model = new DefaultListModel<>();
     JSplitPane sp =  new JSplitPane();
     JLabel location = createLabel("", 215, 65, 380, 30, jp);
-    LocSelPage(int i){
+    LocSelPage(int i, Car c){
         super(jf,jp);
         this.i =i;
+        this.c = c;
+        Location ret = new Location(null, null, null, false, null);
         jf.add(sp);
-
         list.setModel(model);
         sp.setLeftComponent(new JScrollPane(list));
         sp.setRightComponent(jp);
-        jp.add(location);
-        try {
-            File locFile = new File("locations.csv");
-            Scanner locScanner = new Scanner(locFile);
-            locScanner.nextLine();
-            while(locScanner.hasNext()) {
-                String locLine = locScanner.nextLine();
-                String[] locAttr = locLine.split(",");
-                Location l = new Location(locAttr[0], locAttr[1], locAttr[2], Boolean.parseBoolean(locAttr[3]), null);
-                model.addElement(l);
-            }
-            locScanner.close();
-        } 
-        catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
+        Location.getLocList(model, this.c);
         list.getSelectionModel().addListSelectionListener(e ->{
             Location l = list.getSelectedValue();
             location.setText(l.getLocationName()+" "+l.getAddress()+" "+l.getIsLocationAvailable()+" "+l.getCar()+" "+l.getContactInformation());
+            if(c.getCurrentLocation()!=null || i==0){
+                ret.setAddress(l.getAddress());
+                ret.setLocationName(l.getLocationName());
+                ret.setContactInformation(l.getContactInformation());
+                ret.setIsLocationAvailable(l.getIsLocationAvailable());
+                ret.setCar(l.getCar());
+            }
         });
         if(this.i==0){//indicates that we got to choose the location first
-            JButton selCar = createButton("Selet Car", 325, 265, 120, 30,jp);
+            JButton selCar = createButton("Select Car", 325, 265, 120, 30,jp);
             selCar.addActionListener((ActionListener) new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e){
                     jf.dispose();
-                    CarSelPage carPage = new CarSelPage(1);
+                    CarSelPage carPage = new CarSelPage(1,ret);
                 }
             });
         }

@@ -10,6 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import objectpack.Car;
+import objectpack.Location;
+
 class AppPage extends Page{
     static JPanel jp = new JPanel();
     static JFrame jf = new JFrame("Rent-A-Car");
@@ -20,7 +23,8 @@ class AppPage extends Page{
             @Override
             public void actionPerformed(ActionEvent e){
                 jf.dispose();
-                CarSelPage rentPage = new CarSelPage(0);
+                Location l = new Location(null, null, null, false, null);
+                CarSelPage rentPage = new CarSelPage(0,l);
             }
         });
 
@@ -29,7 +33,8 @@ class AppPage extends Page{
             @Override
             public void actionPerformed(ActionEvent e){
                 jf.dispose();
-                LocSelPage locPage = new LocSelPage(0);
+                Car c = new Car(null, null, null, null, null, null, null, false, null);
+                LocSelPage locPage = new LocSelPage(0,c);
             }
         });
 
