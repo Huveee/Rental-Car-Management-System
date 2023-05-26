@@ -1,5 +1,6 @@
 package pagepack;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -13,6 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+
+import objectpack.Customer;
 
 
 public class LaunchPage extends Page{
@@ -21,28 +25,33 @@ public class LaunchPage extends Page{
     public LaunchPage(){
         super(jf,jp);
 
-        createLabel("Welcome, if you don't already have an account sign in first!", 215,105 , 395, 30,jp);
+        createLabel("Welcome, if you don't already have an account sign up first!", 145,85 , 405, 45,jp);;
 
-        createLabel("Email:", 295, 175, 85, 30,jp);
+        createLabel("Email:", 195, 145, 85, 30,jp);
 
-        JTextField mailField = createField(345, 175, 125, 30,jp);
+        JTextField mailField = createField(195, 175, 165, 30,jp);
 
-        createLabel("Password:", 275, 235, 85, 30, jp);
+        createLabel("Password:", 195, 205, 85, 30, jp);
 
-        JPasswordField passwordText = createPasswordField(345,235,125,30, jp);
+        JPasswordField passwordText = createPasswordField(195,235,125,30, jp);
 
-        JButton signIn = createButton("Sign In", 325, 425, 120, 30, jp);
+        JButton logIn = createButton("Log In", 195, 315, 150, 45, jp);
+        Color c1 = new Color(6, 137, 119);
+        logIn.setBackground(c1);
 
-        JButton logIn = createButton("Log In", 325, 385, 120, 30, jp);
-
-        JLabel failedLogin = createLabel("", 215, 465, 380, 20, jp);
+        JButton signUp = createButton("Sign Up", 195, 375, 150, 45, jp);
+        Color c = new Color(242, 181, 121);
+        signUp.setBackground(c);
         
-        //When user presses Sign In button
-        signIn.addActionListener(new ActionListener() {
+
+        JLabel failedLogin = createLabel("", 85, 465, 420, 20, jp);
+        
+        //When user presses Sign Up button
+        signUp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
                 jf.dispose();
-                SignInPage signInPage = new SignInPage();
+                SignUpPage signUpPage = new SignUpPage();
             }
         });
 
@@ -56,31 +65,20 @@ public class LaunchPage extends Page{
                     jf.dispose();
                     AdminPage adminPage = new AdminPage();
                 }
-                try {
-                    File accFile = new File("accounts.csv");
-                    Scanner accScanner = new Scanner(accFile);
-                    accScanner.nextLine();
-                    while(accScanner.hasNext()) {
-                        String accLine = accScanner.nextLine();
-                        String[] accAttr = accLine.split(",");
-                        if(mail.equals(accAttr[1]) && password.equals(accAttr[2])){
-                            jf.dispose();
-                            AppPage appPage = new AppPage();
-                        }
-                    }
-                    accScanner.close();
+                else if(Customer.doCredentialsMatch(mail, password)){
+                    jf.dispose();
+                    AppPage appPage = new AppPage();
+                }
+                else{        
                     failedLogin.setText("The password and email address you have entered don't match!");
-                } 
-                catch (FileNotFoundException t) {
-                    System.out.println("An error occurred.");
-                    t.printStackTrace();
                 }
             }
         });
 
-        ImageIcon image = new ImageIcon("imgpack\\carkeys.jpg");
+        ImageIcon image = new ImageIcon("imgpack\\carkeys3.jpg");
         JLabel imagLabel = new JLabel("",image,JLabel.CENTER);
-        imagLabel.setBounds(0, 0, 800, 500);
+        imagLabel.setBounds(614, 0, 320, 510);
+        imagLabel.setBorder(new LineBorder(Color.DARK_GRAY,12));
         jp.add(imagLabel);
 
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -113,9 +113,16 @@ public class Car {
                 String carLine = carScanner.nextLine();
                 String[] carAttr = carLine.split(",");
                 Car c = new Car(carAttr[0], carAttr[1], carAttr[2], carAttr[3], carAttr[4], carAttr[5], carAttr[6], Boolean.parseBoolean(carAttr[7]), carAttr[8]);
-                if(l.getLocationName()!=null){
-                    if(l.getLocationName().equalsIgnoreCase(c.getCurrentLocation())){
-                        model.addElement(c);
+                if(l!=null){
+                    if(l.getLocationName()!=null && !c.getIsReserved()){
+                        if(l.getLocationName().equalsIgnoreCase(c.getCurrentLocation())){
+                            model.addElement(c);
+                        }
+                    }
+                    else{
+                        if(!c.getIsReserved()){
+                            model.addElement(c);
+                        }
                     }
                 }
                 else{

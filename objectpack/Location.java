@@ -32,13 +32,20 @@ public class Location {
                 String locLine = locScanner.nextLine();
                 String[] locAttr = locLine.split(",");
                 Location l = new Location(locAttr[0], locAttr[1], locAttr[2], Boolean.parseBoolean(locAttr[3]), null);                
-                if(c.getCurrentLocation()!=null){
-                    if(c.getCurrentLocation().equalsIgnoreCase(l.getLocationName())){
+                if(c!=null){
+                    if(c.getCurrentLocation()!=null && l.getIsLocationAvailable()){
+                        if(c.getCurrentLocation().equalsIgnoreCase(l.getLocationName())){
+                            model.addElement(l);
+                        }
+                    }
+                    else{
                         model.addElement(l);
                     }
                 }
                 else{
-                    model.addElement(l);
+                    if(l.getIsLocationAvailable()){
+                        model.addElement(l);
+                    }
                 }
             }
             locScanner.close();
