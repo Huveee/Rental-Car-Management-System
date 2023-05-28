@@ -2,6 +2,8 @@ package objectpack;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 import javax.swing.DefaultListModel;
@@ -12,7 +14,6 @@ public class Location {
     private String contactInformation;
     private boolean isLocationAvailable;
     private Car car;
-
     
     
     public Location(String locationName,String address,String contactInformation,boolean isLocationAvailable,Car car){
@@ -21,6 +22,31 @@ public class Location {
         this.contactInformation = contactInformation;
         this.isLocationAvailable = isLocationAvailable;
         this.car = car;
+    }
+
+    public void updateLocation(Location l){
+        try {
+            File locFile = new File("locations.csv");
+            File tempFile = new File("temp.csv");
+            FileWriter locWriter = new FileWriter(tempFile);
+            Scanner locScanner = new Scanner(locFile);
+            locWriter.write(locScanner.nextLine()+"\n");
+            while(locScanner.hasNext()){
+                String locLine = locScanner.nextLine();
+                String[] locAttr = locLine.split(",");
+                if(!(this.address.equalsIgnoreCase(locAttr[1]))){
+                    locWriter.write(locLine+"\n");
+                }
+            }
+            locScanner.close();
+            locWriter.write(l.locationName+","+l.address+","+l.contactInformation+","+l.isLocationAvailable+","+null);
+            locWriter.close();
+            locFile.delete();
+            tempFile.renameTo(locFile);
+        } 
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void getLocList(DefaultListModel<Location> model, Car c){

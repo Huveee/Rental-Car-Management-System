@@ -80,6 +80,10 @@ class LocSelPage extends Page{
                 @Override
                 public void actionPerformed(ActionEvent e){
                     //Payment payment = new Payment(0, null, null)
+                    c.setIsReserved(true);
+                    c.updateCar(c);
+                    ret.setIsLocationAvailable(false);
+                    ret.updateLocation(ret);
                     JOptionPane.showMessageDialog(null, "You have successfully rented your car!");
                     jf.dispose();
                     AppPage appPage = new AppPage();
