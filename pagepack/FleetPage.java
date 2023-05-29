@@ -52,7 +52,7 @@ class FleetPage extends Page{
                     jf.dispose();
                     String[] carAttr = updateField.getText().split(",");
                     Car fieldCar = new Car(carAttr[0], carAttr[1], carAttr[2], carAttr[3], carAttr[4], carAttr[5], carAttr[6], false,carAttr[7]);
-                    c.updateCar(fieldCar);
+                    fieldCar.updateCar();
                 }
             });
     
@@ -64,7 +64,6 @@ class FleetPage extends Page{
                 }
             });
         });
-
 
 
 

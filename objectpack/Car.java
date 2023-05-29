@@ -55,7 +55,7 @@ public class Car {
         }
     }
     //Not done
-    public void updateCar(Car c){
+    public void updateCar(){
         try {
             File carFile = new File("cars.csv");
             File tempFile = new File("temp.csv");
@@ -70,7 +70,7 @@ public class Car {
                 }
             }
             carScanner.close();
-            carWriter.write(c.brandName+","+c.modelName+","+c.year+","+c.color+","+c.fuelConsumption+","+c.dailyRentalRate+","+c.licensePlate+","+c.isReserved+","+c.currentLocation);
+            carWriter.write(this.brandName+","+this.modelName+","+this.year+","+this.color+","+this.fuelConsumption+","+this.dailyRentalRate+","+this.licensePlate+","+this.isReserved+","+this.currentLocation);
             carWriter.close();
             carFile.delete();
             tempFile.renameTo(carFile);
@@ -207,7 +207,4 @@ public class Car {
     public void setCurrentLocation(String currentLocation) {
         this.currentLocation = currentLocation;
     }
-    
-    
-
 }

@@ -1,24 +1,21 @@
 package pagepack;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTextField;
 
 import objectpack.Car;
+import objectpack.Customer;
 import objectpack.Location;
+import objectpack.Reservation;
 
 
 class CarSelPage extends Page{
@@ -29,9 +26,16 @@ class CarSelPage extends Page{
     JList<Car> list = new JList<>();
     DefaultListModel<Car> model = new DefaultListModel<>();
     JSplitPane sp =  new JSplitPane();
-    JLabel carName =createLabel("", 215, 65, 380, 30,jp);
-    CarSelPage(int i, Location l){
+    JLabel brand =createLabel("", 215, 65, 110, 30,jp);
+    JLabel carModel =createLabel("", 215, 95, 110, 30,jp);
+    JLabel year =createLabel("", 215, 125, 110, 30,jp);
+    JLabel color =createLabel("", 215, 155, 110, 30,jp);
+    JLabel fuelCons =createLabel("", 215, 185, 250, 30,jp);
+    JLabel rental =createLabel("", 215, 215, 330, 30,jp);
+    JLabel location =createLabel("", 215, 245, 330, 30,jp);
+    CarSelPage(Reservation res,Customer cus,int i, Location l){
         super(jf, jp);
+        Color cl = new Color(6, 137, 119);
         this.i=i;
         this.l=l;
         Car ret = new Car(null, null, null, null, null, null, null, false, null);
@@ -42,7 +46,13 @@ class CarSelPage extends Page{
         Car.getCarList(model,this.l);
         list.getSelectionModel().addListSelectionListener(e ->{
             Car c = list.getSelectedValue();
-            carName.setText(c.getBrandName()+" "+c.getModelName()+" "+c.getYear()+" "+c.getColor()+" "+c.getFuelConsumption()+" "+c.getDailyRentalRate()+" "+c.getLicensePlate()+" "+c.getCurrentLocation());
+            brand.setText("Brand: "+c.getBrandName());
+            carModel.setText("Model: "+c.getModelName());
+            year.setText("Year: "+c.getYear());
+            color.setText("Color: "+c.getColor());
+            fuelCons.setText("Fuel Consumption(combined): "+c.getFuelConsumption()+" lt");
+            rental.setText("The rental rate for this car is $"+ c.getDailyRentalRate()+" a day.");
+            location.setText("This car is currently in "+c.getCurrentLocation());
             if(this.l.getLocationName()!=null || i==0){
                 ret.setBrandName(c.getBrandName());
                 ret.setModelName(c.getModelName());
@@ -56,43 +66,32 @@ class CarSelPage extends Page{
             }       
         });
         if(i==0){
-            JButton selLoc = createButton("Select Location", 325, 265, 120, 30,jp);
+            JButton selLoc = createButton("Select Location", 265, 325, 180, 40,jp);
+            selLoc.setBackground(cl);
             selLoc.addActionListener((ActionListener) new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e){
                     jf.dispose();
-                    LocSelPage locPage = new LocSelPage(1,ret);
+                    Reservation res=new Reservation(null,null,ret);
+                    LocSelPage locPage = new LocSelPage(res,cus,1,ret);
                 }
             });
         }
         else{
-            createLabel("Card No:", 295, 135, 85, 30,jp);
-    
-            JTextField cardField = createField(345, 135, 225, 30,jp);
-
-            createLabel("Expiration Date:", 255, 175, 125, 30,jp);
-    
-            JTextField dateField = createField(345, 175, 75, 30,jp);
-    
-            createLabel("CVV:", 305, 215, 35, 30,jp);
-    
-            JPasswordField cvvText = createPasswordField(345,215,65,30,jp);
-    
-            JButton rentCar = createButton("Rent Car", 325, 265, 120, 30, jp);
-            rentCar.addActionListener((ActionListener) new ActionListener() {
+        	res.setCar(ret);
+            l.setIsLocationAvailable(false);
+            l.updateLocation();
+            JButton slcLoc = createButton("Select Drop-Off Location", 245, 325, 220, 40, jp);
+            slcLoc.setBackground(cl);
+            slcLoc.addActionListener((ActionListener) new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e){
-                    //Payment payment = new Payment(0, null, null)
-                    l.setIsLocationAvailable(false);
-                    l.updateLocation(l);
-                    ret.setIsReserved(true);
-                    ret.updateCar(ret);
-                    JOptionPane.showMessageDialog(null, "You have successfully rented your car!");
                     jf.dispose();
-                    AppPage appPage = new AppPage();
+                    DropOffLocPage dLocPage = new DropOffLocPage(res,cus,2,ret);
                 }
             });
         }
+
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setResizable(false);
         jf.setVisible(true);

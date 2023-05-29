@@ -1,7 +1,10 @@
 package pagepack;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,31 +23,33 @@ class SignUpPage extends Page{
     SignUpPage(){
         super(jf,jp);
 
-        createLabel("Name Surname:",265, 115,85,25,jp);
+        createLabel("Name Surname:",265, 115,105,25,jp);
 
-        JTextField nameField = createField(345,115,105,25,jp);
+        JTextField nameField = createField(375,115,105,25,jp);
 
-        createLabel("Identification No:",225, 145,105,25,jp);
+        createLabel("Identification No:",265, 145,145,25,jp);
 
-        JTextField idField = createField(345,145,105,25,jp);
+        JTextField idField = createField(375,145,105,25,jp);
 
-        createLabel("Phone Number:",245,175,115,25,jp);
+        createLabel("Phone Number:",275,175,115,25,jp);
 
-        JTextField phoneField = createField(345,175,105,25,jp);
+        JTextField phoneField = createField(375,175,85,25,jp);
 
-        createLabel("Age:",245, 205,85,25,jp);
+        createLabel("Age:",345, 205,85,25,jp);
             
-        JTextField ageField = createField(345,205,105,25,jp);
+        JTextField ageField = createField(375,205,35,25,jp);
 
-        createLabel("Email",295,235,85,25,jp);
+        createLabel("Email:",333,235,85,25,jp);
 
-        JTextField mailField = createField(345,235,105,25,jp);
+        JTextField mailField = createField(375,235,105,25,jp);
 
-        createLabel("Password:",275,265,85,25,jp);
+        createLabel("Password:",309,265,85,25,jp);
 
-        JPasswordField passwordText = createPasswordField(345,265,105,25, jp);
+        JPasswordField passwordText = createPasswordField(375,265,105,25, jp);
 
-        JButton createAcc = createButton("Create Account",315, 315, 135, 25,jp);
+        JButton createAcc = createButton("Create Account",325, 325, 135, 55,jp);
+        Color cl = new Color(242, 181, 121);
+        createAcc.setBackground(cl);
 
         createAcc.addActionListener(new ActionListener() {
             @Override
@@ -80,7 +85,22 @@ class SignUpPage extends Page{
             }
             
         });
-        
+
+        JButton back = createBackButton(20, 465, 65, 25,jp);        
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                jf.dispose();
+                LaunchPage launchPage = new LaunchPage();
+            }
+        });
+
+        ImageIcon image = new ImageIcon("imgpack\\signupbg.png");
+        JLabel imagLabel = new JLabel("",image,JLabel.CENTER);
+        imagLabel.setBounds(11, -5, 910, 520);
+        jp.add(imagLabel);
+
+
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setResizable(false);
         jf.setVisible(true);

@@ -43,7 +43,16 @@ class Page {
         JButton newButton = new JButton(text);
         newButton.setBounds(x, y, width, height);
         newButton.setFont(f2);
-        //newButton.setForeground(Color.white);
+        jp.add(newButton);
+        return newButton;
+    }
+
+    JButton createBackButton(int x,int y,int width, int height, JPanel jp){
+        JButton newButton = new JButton("Back");
+        newButton.setBounds(x, y, width, height);
+        newButton.setFont(f2);
+        Color cl = new Color(242, 181, 121);
+        newButton.setBackground(cl);
         jp.add(newButton);
         return newButton;
     }

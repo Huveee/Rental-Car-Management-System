@@ -1,4 +1,5 @@
-LocationName,Address,ContactInformation,IsLocationAvailable,Car
-Buca,Kzk Mh. 37/12.Sk,05324777003,true,null
-Bornova,Alim Mh. 378/21.Sk,05324777003,true,null
-Konak,Peltek Mh. 596/4.Sk,05324777003,true,null
+LocationName,Address,ContactInformation,IsLocationAvailable
+Bornova,Alim Mh. 378/21.Sk,05324777003,true
+Buca,Kzk Mh. 37/12.Sk,05324777003,true
+Konak,Peltek Mh. 596/4.Sk,05324777003,true
+Menemen,Kantar Mh. 153/5.Sk,05539641135,true

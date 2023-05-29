@@ -3,9 +3,6 @@ package pagepack;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -64,10 +61,12 @@ public class LaunchPage extends Page{
                 if(mail.equals("admin@rentacar.com")&& password.equals("12345")){
                     jf.dispose();
                     AdminPage adminPage = new AdminPage();
+                    
                 }
                 else if(Customer.doCredentialsMatch(mail, password)){
                     jf.dispose();
-                    AppPage appPage = new AppPage();
+                    Customer cust=Customer.findCustomer(mail);
+                    AppPage appPage = new AppPage(cust);
                 }
                 else{        
                     failedLogin.setText("The password and email address you have entered don't match!");

@@ -1,4 +1,6 @@
 UserName,Email,Password,IdNo,Age,Phone
-Leo,Eray,1234,-,-,-
-C,Ceren,1234,-,-,-
-Huve,Huveyda,1234,-,-,-
+C,Ceren,1234,-,12,-
+Huve,Huveyda,1234,-,14,-
+Lale,lale@hotmail.com,Lale1234,46570246585,20,55555555555
+Eray,Ery@gmail.com,Ery12345,12345678944,21,5235688976
+-,Eray,1234,12345678947,15,-

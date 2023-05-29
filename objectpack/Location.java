@@ -13,18 +13,18 @@ public class Location {
     private String address;
     private String contactInformation;
     private boolean isLocationAvailable;
-    private Car car;
+    //private Car car;
+
     
     
-    public Location(String locationName,String address,String contactInformation,boolean isLocationAvailable,Car car){
+    public Location(String locationName,String address,String contactInformation,boolean isLocationAvailable){
         this.locationName = locationName;
         this.address = address;
         this.contactInformation = contactInformation;
         this.isLocationAvailable = isLocationAvailable;
-        this.car = car;
     }
-
-    public void updateLocation(Location l){
+    
+    public void updateLocation(){
         try {
             File locFile = new File("locations.csv");
             File tempFile = new File("temp.csv");
@@ -39,7 +39,7 @@ public class Location {
                 }
             }
             locScanner.close();
-            locWriter.write(l.locationName+","+l.address+","+l.contactInformation+","+l.isLocationAvailable+","+null);
+            locWriter.write(this.locationName+","+this.address+","+this.contactInformation+","+this.isLocationAvailable+","+null);
             locWriter.close();
             locFile.delete();
             tempFile.renameTo(locFile);
@@ -49,7 +49,7 @@ public class Location {
         }
     }
 
-    public static void getLocList(DefaultListModel<Location> model, Car c){
+    public static void getLocList(DefaultListModel<Location> model, Car c,int i){
         try {
             File locFile = new File("locations.csv");
             Scanner locScanner = new Scanner(locFile);
@@ -57,22 +57,30 @@ public class Location {
             while(locScanner.hasNext()) {
                 String locLine = locScanner.nextLine();
                 String[] locAttr = locLine.split(",");
-                Location l = new Location(locAttr[0], locAttr[1], locAttr[2], Boolean.parseBoolean(locAttr[3]), null);                
-                if(c!=null){
-                    if(c.getCurrentLocation()!=null && l.getIsLocationAvailable()){
-                        if(c.getCurrentLocation().equalsIgnoreCase(l.getLocationName())){
+                Location l = new Location(locAttr[0], locAttr[1], locAttr[2], Boolean.parseBoolean(locAttr[3])); 
+                if(i==2) {
+                	if(l.getIsLocationAvailable()) {
+                		model.addElement(l);
+                	}
+                }
+                else { //i==1 or i==0
+                    if(c!=null){
+                        if(c.getCurrentLocation()!=null && l.getIsLocationAvailable()){
+                            if(c.getCurrentLocation().equalsIgnoreCase(l.getLocationName())){
+                                model.addElement(l);
+                            }
+                        }
+                        else{
                             model.addElement(l);
                         }
                     }
                     else{
-                        model.addElement(l);
+                        if(l.getIsLocationAvailable()){
+                            model.addElement(l);
+                        }
                     }
-                }
-                else{
-                    if(l.getIsLocationAvailable()){
-                        model.addElement(l);
-                    }
-                }
+				}
+
             }
             locScanner.close();
         } 
@@ -112,14 +120,6 @@ public class Location {
 
     public void setIsLocationAvailable(boolean isLocationAvailable) {
         this.isLocationAvailable = isLocationAvailable;
-    }
-
-    public Car getCar() {
-        return this.car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
     }
     
 }

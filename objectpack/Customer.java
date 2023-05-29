@@ -1,13 +1,15 @@
 package objectpack;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
+import java.util.Scanner;
 
 public class Customer {
     private String userName;
@@ -16,7 +18,8 @@ public class Customer {
     private String idNumber;
     private int age;
     private String phone;
-    private Car car;
+    Reservation res;
+    public static List<Customer> objList = new ArrayList<>();
 
     
     //Constructer
@@ -29,15 +32,17 @@ public class Customer {
         this.phone = phone;
     }
     
-    //Methods
-    Car getCar() {
-        return this.car;
-    }
 
-    public void setCar(Car car) {
-        this.car = car;
-    }
-    public String getUserName() {
+    public Reservation getRes() {
+		return res;
+	}
+
+	public void setRes(Reservation res) {
+		this.res = res;
+	}
+
+
+	public String getUserName() {
         return this.userName;
     }
 
@@ -84,7 +89,6 @@ public class Customer {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
     public boolean userNameValidation(Customer cust){
         if (cust.userName.matches("[a-zA-Z ]+")) return true;
         else return false;
@@ -106,10 +110,18 @@ public class Customer {
         else return false;
     }
     public boolean phoneValidation(Customer cust){
-        if(cust.phone.matches("[1-9]\\d{10}")) return true;
+        if(cust.phone.matches("^\\d{10}$")) return true;
         else return false;
     }
-
+    
+    boolean allFieldsValidation(Customer cust) { //make all validations
+        if(userNameValidation(cust)&& emailValidation( cust) && passwordValidation( cust) 
+            && idValidation( cust) && ageValidation( cust) && phoneValidation( cust))
+            return true;
+        else
+            return false;
+    }
+    
     public boolean toDocument(Customer cust) {
         boolean flag = true;
         List<String[]> custList = readCSV("accounts.csv", ",");
@@ -128,24 +140,25 @@ public class Customer {
             newCust.add(Integer.toString(cust.age));
             newCust.add(cust.phone);
             writeCSV(newCust, "accounts.csv", ",");
+            objList.add(cust); //Add customer as object to the List
         }
         return flag;
     }
     
     void writeCSV(List<String> data, String csvFile, String csvSplitBy) {
-        
-        try (FileWriter writer = new FileWriter(csvFile, true)) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(csvFile, true))) {
             StringBuilder sb = new StringBuilder();
             for (String cell : data) {
                 sb.append(cell).append(csvSplitBy);
             }
             sb.deleteCharAt(sb.length() - 1); // Son ayırıcı karakteri silme
             sb.append("\n"); // Satır sonu karakteri ekleme
-            writer.write(sb.toString());
+            writer.print(sb.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     static List<String[]> readCSV(String csvFile, String csvSplitBy) {
         List<String[]> rows = new ArrayList<>();
 
@@ -158,8 +171,10 @@ public class Customer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return rows;
     }
+    
     public static boolean doCredentialsMatch(String eMail, String password){
         List<String[]> list = readCSV("accounts.csv", ",");
         for (String[] row : list) {
@@ -169,5 +184,53 @@ public class Customer {
         }
         return false;
     }
+    
+    // public static Customer findCustomer(String eMail) { //To find the customer object in object List
+    //     for (Customer cust : objList  ) {
+    //         if (cust.getEMail().equals(eMail)) {
+    //             return cust;
+    //         }
+    //     }
+    //     return null;
+    // }
 
+    public static Customer findCustomer(String eMail){
+        Customer cust = new Customer(null, null, null, null, 0, null);
+        List<String[]> list = readCSV("accounts.csv", ",");
+        for (String[] row : list) {
+            if (Arrays.asList(row).contains(eMail)) {
+                cust.setUserName(Arrays.asList(row).get(0));
+                cust.setEMail(Arrays.asList(row).get(1));
+                cust.setPassword(Arrays.asList(row).get(2));
+                cust.setIdNumber(Arrays.asList(row).get(3));
+                cust.setAge(Integer.parseInt(Arrays.asList(row).get(4)));
+                cust.setPhone(Arrays.asList(row).get(5));
+            }
+        }
+        return cust;
+    }
+
+    public void deleteAccount(){
+        try {
+            File cusFile = new File("accounts.csv");
+            File tempFile = new File("temp.csv");
+            FileWriter cusWriter = new FileWriter(tempFile);
+            Scanner cusScanner = new Scanner(cusFile);
+            cusWriter.write(cusScanner.nextLine()+"\n");
+            while(cusScanner.hasNext()){
+                String cusLine = cusScanner.nextLine();
+                String[] cusAttr = cusLine.split(",");
+                if(!(this.idNumber.equalsIgnoreCase(cusAttr[3]))){
+                    cusWriter.write(cusLine+"\n");
+                }
+            }
+            cusScanner.close();
+            cusWriter.close();
+            cusFile.delete();
+            tempFile.renameTo(cusFile);
+        } 
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
