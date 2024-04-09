@@ -23,7 +23,7 @@ class SignUpPage extends Page{
     SignUpPage(){
         super(jf,jp);
 
-        createLabel("Name Surname:",265, 115,105,25,jp);
+        createLabel("Name Surname:",267, 115,105,25,jp);
 
         JTextField nameField = createField(375,115,105,25,jp);
 
@@ -86,7 +86,7 @@ class SignUpPage extends Page{
             
         });
 
-        JButton back = createBackButton(20, 465, 65, 25,jp);        
+        JButton back = createButton(20, 465, 65, 25,jp,0);        
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){

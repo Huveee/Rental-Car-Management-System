@@ -16,14 +16,14 @@ public class Payment {
     private String paymentTime;
     private String CardNumber;
     private String ExpirationDate;
-    private String CVC;
+    private String CVV;
     public static List <Payment> payList=new ArrayList<>();
     
 
-	public Payment( String CardNumber, String ExpirationDate, String CVC){
+	public Payment( String CardNumber, String ExpirationDate, String CVV){
         this.CardNumber=CardNumber;
         this.ExpirationDate=ExpirationDate;
-        this.CVC=CVC;
+        this.CVV=CVV;
         
     }        
 	
@@ -55,8 +55,8 @@ public class Payment {
         if (pay.CardNumber.matches("^[0-9]{16}$")) return true;
         else return false;
     }
-    public boolean isCVCValid(Payment pay){
-        if(pay.CVC.matches("^[0-9]{3}$")) return true;
+    public boolean isCVVValid(Payment pay){
+        if(pay.CVV.matches("^[0-9]{3}$")) return true;
         else return false;
     }
     public boolean isExpDateValid(Payment pay){
@@ -65,7 +65,7 @@ public class Payment {
     }
     
     public boolean isAllFieldsValid(Payment pay) {
-    	if(isCardNoValid(pay) && isCVCValid(pay) && isExpDateValid(pay)) return true;
+    	if(isCardNoValid(pay) && isCVVValid(pay) && isExpDateValid(pay)) return true;
     	else return false;
     }
 	
@@ -90,16 +90,16 @@ public class Payment {
 		
 	}
 	
-	public void addToDocument(Payment pay) {
+	public void addToDocument() {
 		
-		payList.add(pay);
+		payList.add(this);
 		
 		try {
 		    FileWriter fWriter = new FileWriter("payments.csv",true);
 		    PrintWriter pWriter = new PrintWriter(fWriter);
 
-		    pWriter.println(pay.getCustId()+","+pay.getPaymentAmount()+","+pay.getPaymentDate()+","+pay.getPaymentTime()+","+
-		    pay.getCardNumber()+","+pay.getExpirationDate()+","+pay.getCVC());
+		    pWriter.println(this.getCustId()+","+this.getPaymentAmount()+","+this.getPaymentDate()+","+this.getPaymentTime()+","+
+		    this.getCardNumber()+","+this.getExpirationDate()+","+this.getCVV());
 
 		    pWriter.close();
 		    System.out.println("Payment info added to the csv file.");
@@ -110,8 +110,8 @@ public class Payment {
 	}
 
 	
-	public String getCVC() {
-		return CVC;
+	public String getCVV() {
+		return CVV;
 	}
 
 	public String getExpirationDate() {

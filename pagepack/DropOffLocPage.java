@@ -18,7 +18,7 @@ import objectpack.Customer;
 import objectpack.Location;
 import objectpack.Reservation;
 
-public class DropOffLocPage extends Page {
+class DropOffLocPage extends Page {
 	
     private int i;
     private Car c;
@@ -29,9 +29,9 @@ public class DropOffLocPage extends Page {
     JList<Location> list = new JList<>();
     DefaultListModel<Location> model = new DefaultListModel<>();
     JSplitPane sp =  new JSplitPane();
-    JLabel fullAddress = createLabel("", 205, 105, 380, 30, jp);
+    JLabel fullAddress = createLabel("", 235, 105, 380, 30, jp);
     JLabel contact = createLabel("", 20, 467, 165, 25, jp);
-	public DropOffLocPage(Reservation res,Customer cus,int i,Car c) {
+	DropOffLocPage(Reservation res,Customer cus,int i,Car c) {
 		super(jf, jp);
 		
         this.i =i;
@@ -59,7 +59,7 @@ public class DropOffLocPage extends Page {
         
         
         res.setDropOffLocation(ret);
-        JButton makeRes = createButton("Make Reservation", 325, 265, 120, 30,jp);
+        JButton makeRes = createButton("Continue to Reservation", 265, 265, 220, 45, jp);
         makeRes.setBackground(cl);
         makeRes.addActionListener((ActionListener) new ActionListener() {
             @Override

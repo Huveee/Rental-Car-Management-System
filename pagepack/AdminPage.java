@@ -39,7 +39,7 @@ class AdminPage extends Page{
             }
         });
 
-        JButton back = createBackButton(20, 465, 65, 25,jp);        
+        JButton back = createButton(20, 465, 65, 25,jp,0);        
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){

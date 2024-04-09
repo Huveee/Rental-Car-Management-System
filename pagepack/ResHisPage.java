@@ -24,6 +24,7 @@ class ResHisPage extends Page{
     JLabel pickLoc =createLabel("", 175, 265, 380, 25,jp);
     JLabel dropLoc =createLabel("", 175, 295, 380, 25,jp);
     JLabel cost =createLabel("", 175, 325, 380, 25,jp);
+    JLabel id =createLabel("", 175, 355, 380, 25,jp);
     ResHisPage(String custId){
         super(jf,jp);
         jf.add(sp);
@@ -41,6 +42,9 @@ class ResHisPage extends Page{
             pickLoc.setText("Pickup Location: "+line[5]);
             dropLoc.setText("Drop-Off Location: "+line[6]);
             cost.setText("Cost: $"+line[8]);
+            if(custId ==null){
+                id.setText("Customer's Id: "+line[0]);
+            }
         });
         
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -13,10 +13,7 @@ public class Location {
     private String address;
     private String contactInformation;
     private boolean isLocationAvailable;
-    //private Car car;
 
-    
-    
     public Location(String locationName,String address,String contactInformation,boolean isLocationAvailable){
         this.locationName = locationName;
         this.address = address;
@@ -39,7 +36,7 @@ public class Location {
                 }
             }
             locScanner.close();
-            locWriter.write(this.locationName+","+this.address+","+this.contactInformation+","+this.isLocationAvailable+","+null);
+            locWriter.write(this.locationName+","+this.address+","+this.contactInformation+","+this.isLocationAvailable);
             locWriter.close();
             locFile.delete();
             tempFile.renameTo(locFile);
@@ -63,7 +60,7 @@ public class Location {
                 		model.addElement(l);
                 	}
                 }
-                else { //i==1 or i==0
+                else {
                     if(c!=null){
                         if(c.getCurrentLocation()!=null && l.getIsLocationAvailable()){
                             if(c.getCurrentLocation().equalsIgnoreCase(l.getLocationName())){

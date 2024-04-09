@@ -46,8 +46,8 @@ class Page {
         jp.add(newButton);
         return newButton;
     }
-
-    JButton createBackButton(int x,int y,int width, int height, JPanel jp){
+    //Overrloads the prev method in order to create a back button
+    JButton createButton(int x,int y,int width, int height, JPanel jp,int i){
         JButton newButton = new JButton("Back");
         newButton.setBounds(x, y, width, height);
         newButton.setFont(f2);

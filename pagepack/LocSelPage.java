@@ -26,7 +26,7 @@ class LocSelPage extends Page{
     JList<Location> list = new JList<>();
     DefaultListModel<Location> model = new DefaultListModel<>();
     JSplitPane sp =  new JSplitPane();
-    JLabel fullAddress = createLabel("", 205, 105, 380, 30, jp);
+    JLabel fullAddress = createLabel("", 235, 105, 380, 30, jp);
     JLabel contact = createLabel("", 20, 467, 165, 25, jp);
     LocSelPage(Reservation res,Customer cus,int i, Car c){
         super(jf,jp);
@@ -76,8 +76,6 @@ class LocSelPage extends Page{
             });
         }
         
-        
-
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setResizable(false);
         jf.setVisible(true);

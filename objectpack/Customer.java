@@ -19,7 +19,6 @@ public class Customer {
     private int age;
     private String phone;
     Reservation res;
-    public static List<Customer> objList = new ArrayList<>();
 
     
     //Constructer
@@ -32,7 +31,110 @@ public class Customer {
         this.phone = phone;
     }
     
+    //Methods
+    public boolean toDocument(Customer cust) {
+        boolean flag = true;
+        List<String[]> custList = readCSV("accounts.csv", ",");
+        for (String[] row : custList) {
+            if (Arrays.asList(row).contains(cust.eMail) || Arrays.asList(row).contains(cust.idNumber)) {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            List<String> newCust = new ArrayList<>();
+            newCust.add(cust.userName);
+            newCust.add(cust.eMail);
+            newCust.add(cust.password);
+            newCust.add(cust.idNumber);
+            newCust.add(Integer.toString(cust.age));
+            newCust.add(cust.phone);
+            writeCSV(newCust, "accounts.csv", ",");
+        }
+        return flag;
+    }
+    
+    void writeCSV(List<String> data, String csvFile, String csvSplitBy) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(csvFile, true))) {
+            StringBuilder sb = new StringBuilder();
+            for (String cell : data) {
+                sb.append(cell).append(csvSplitBy);
+            }
+            sb.deleteCharAt(sb.length() - 1); // Son ayırıcı karakteri silme
+            sb.append("\n"); // Satır sonu karakteri ekleme
+            writer.print(sb.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    static List<String[]> readCSV(String csvFile, String csvSplitBy) {
+        List<String[]> rows = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] row = line.split(csvSplitBy);
+                rows.add(row);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return rows;
+    }
+    
+    public static boolean doCredentialsMatch(String eMail, String password){
+        List<String[]> list = readCSV("accounts.csv", ",");
+        for (String[] row : list) {
+            if (Arrays.asList(row).contains(eMail) && Arrays.asList(row).contains(password)) {
+                return true;
+            }
+        }
+        return false;
+    }
+ 
+
+    public static Customer findCustomer(String eMail){
+        Customer cust = new Customer(null, null, null, null, 0, null);
+        List<String[]> list = readCSV("accounts.csv", ",");
+        for (String[] row : list) {
+            if (Arrays.asList(row).contains(eMail)) {
+                cust.setUserName(Arrays.asList(row).get(0));
+                cust.setEMail(Arrays.asList(row).get(1));
+                cust.setPassword(Arrays.asList(row).get(2));
+                cust.setIdNumber(Arrays.asList(row).get(3));
+                cust.setAge(Integer.parseInt(Arrays.asList(row).get(4)));
+                cust.setPhone(Arrays.asList(row).get(5));
+            }
+        }
+        return cust;
+    }
+
+    public void deleteAccount(){
+        try {
+            File cusFile = new File("accounts.csv");
+            File tempFile = new File("temp.csv");
+            FileWriter cusWriter = new FileWriter(tempFile);
+            Scanner cusScanner = new Scanner(cusFile);
+            cusWriter.write(cusScanner.nextLine()+"\n");
+            while(cusScanner.hasNext()){
+                String cusLine = cusScanner.nextLine();
+                String[] cusAttr = cusLine.split(",");
+                if(!(this.idNumber.equalsIgnoreCase(cusAttr[3]))){
+                    cusWriter.write(cusLine+"\n");
+                }
+            }
+            cusScanner.close();
+            cusWriter.close();
+            cusFile.delete();
+            tempFile.renameTo(cusFile);
+        } 
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public Reservation getRes() {
 		return res;
 	}
@@ -40,7 +142,6 @@ public class Customer {
 	public void setRes(Reservation res) {
 		this.res = res;
 	}
-
 
 	public String getUserName() {
         return this.userName;
@@ -122,115 +223,4 @@ public class Customer {
             return false;
     }
     
-    public boolean toDocument(Customer cust) {
-        boolean flag = true;
-        List<String[]> custList = readCSV("accounts.csv", ",");
-        for (String[] row : custList) {
-            if (Arrays.asList(row).contains(cust.eMail) || Arrays.asList(row).contains(cust.idNumber)) {
-                flag = false;
-                break;
-            }
-        }
-        if (flag) {
-            List<String> newCust = new ArrayList<>();
-            newCust.add(cust.userName);
-            newCust.add(cust.eMail);
-            newCust.add(cust.password);
-            newCust.add(cust.idNumber);
-            newCust.add(Integer.toString(cust.age));
-            newCust.add(cust.phone);
-            writeCSV(newCust, "accounts.csv", ",");
-            objList.add(cust); //Add customer as object to the List
-        }
-        return flag;
-    }
-    
-    void writeCSV(List<String> data, String csvFile, String csvSplitBy) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(csvFile, true))) {
-            StringBuilder sb = new StringBuilder();
-            for (String cell : data) {
-                sb.append(cell).append(csvSplitBy);
-            }
-            sb.deleteCharAt(sb.length() - 1); // Son ayırıcı karakteri silme
-            sb.append("\n"); // Satır sonu karakteri ekleme
-            writer.print(sb.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    static List<String[]> readCSV(String csvFile, String csvSplitBy) {
-        List<String[]> rows = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] row = line.split(csvSplitBy);
-                rows.add(row);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return rows;
-    }
-    
-    public static boolean doCredentialsMatch(String eMail, String password){
-        List<String[]> list = readCSV("accounts.csv", ",");
-        for (String[] row : list) {
-            if (Arrays.asList(row).contains(eMail) && Arrays.asList(row).contains(password)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    // public static Customer findCustomer(String eMail) { //To find the customer object in object List
-    //     for (Customer cust : objList  ) {
-    //         if (cust.getEMail().equals(eMail)) {
-    //             return cust;
-    //         }
-    //     }
-    //     return null;
-    // }
-
-    public static Customer findCustomer(String eMail){
-        Customer cust = new Customer(null, null, null, null, 0, null);
-        List<String[]> list = readCSV("accounts.csv", ",");
-        for (String[] row : list) {
-            if (Arrays.asList(row).contains(eMail)) {
-                cust.setUserName(Arrays.asList(row).get(0));
-                cust.setEMail(Arrays.asList(row).get(1));
-                cust.setPassword(Arrays.asList(row).get(2));
-                cust.setIdNumber(Arrays.asList(row).get(3));
-                cust.setAge(Integer.parseInt(Arrays.asList(row).get(4)));
-                cust.setPhone(Arrays.asList(row).get(5));
-            }
-        }
-        return cust;
-    }
-
-    public void deleteAccount(){
-        try {
-            File cusFile = new File("accounts.csv");
-            File tempFile = new File("temp.csv");
-            FileWriter cusWriter = new FileWriter(tempFile);
-            Scanner cusScanner = new Scanner(cusFile);
-            cusWriter.write(cusScanner.nextLine()+"\n");
-            while(cusScanner.hasNext()){
-                String cusLine = cusScanner.nextLine();
-                String[] cusAttr = cusLine.split(",");
-                if(!(this.idNumber.equalsIgnoreCase(cusAttr[3]))){
-                    cusWriter.write(cusLine+"\n");
-                }
-            }
-            cusScanner.close();
-            cusWriter.close();
-            cusFile.delete();
-            tempFile.renameTo(cusFile);
-        } 
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

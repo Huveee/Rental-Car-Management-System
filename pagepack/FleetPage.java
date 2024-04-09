@@ -1,4 +1,5 @@
 package pagepack;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,7 +21,8 @@ class FleetPage extends Page{
     JList<Car> list = new JList<>();
     DefaultListModel<Car> model = new DefaultListModel<>();
     JSplitPane sp =  new JSplitPane();
-    JLabel carName = createLabel("", 120, 55, 380, 30,jp);
+    JLabel format = createLabel("Please type in with the given format(CSV).", 241, 20, 270, 15, jp);
+    JLabel carName = createLabel("", 160, 135, 400, 30,jp);
     FleetPage(){
         super(jf, jp);
         jf.add(sp);
@@ -28,9 +30,11 @@ class FleetPage extends Page{
         sp.setLeftComponent(new JScrollPane(list));
         sp.setRightComponent(jp);
         Car.getCarList(model,null);
-
+        
         JTextField addField = createField(170, 170, 380, 30, jp);
-        JButton addCar = createButton("Add Car", 250, 200, 140, 30, jp);
+        JButton addCar = createButton("Add Car", 280, 210, 140, 30, jp);
+        Color cl = new Color(6, 137, 119);
+        addCar.setBackground(cl);
         addCar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
@@ -40,12 +44,15 @@ class FleetPage extends Page{
                 c.addToCSV();
             }
         });
-        JButton removeCar = createButton("Remove Car", 250, 250, 140, 30, jp);
+        JButton removeCar = createButton("Remove Car", 280, 270, 140, 30, jp);
+        Color cl1 = new Color(242, 181, 121);
+        removeCar.setBackground(cl1);
         JTextField updateField = createField(170, 360, 380, 30, jp);
-        JButton updateCar = createButton("Update Car", 250, 400, 140, 30, jp);
+        JButton updateCar = createButton("Update Car", 280, 400, 140, 30, jp);
+        updateCar.setBackground(cl);
         list.getSelectionModel().addListSelectionListener(e ->{
             Car c = list.getSelectedValue();
-            carName.setText(c.getBrandName()+" "+c.getModelName()+" "+c.getYear()+" "+c.getColor()+" "+c.getFuelConsumption()+" "+c.getDailyRentalRate()+" "+c.getLicensePlate()+" "+c.getCurrentLocation());
+            carName.setText("Selected Car: "+c.getBrandName()+","+c.getModelName()+","+c.getYear()+","+c.getColor()+","+c.getFuelConsumption()+","+c.getDailyRentalRate()+","+c.getLicensePlate()+","+c.getCurrentLocation());
             updateCar.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e){
